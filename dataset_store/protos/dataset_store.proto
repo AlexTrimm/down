@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+service DataSetService {
+    rpc CreateIterator(DatSetSpec) returns (IteratorSpec) {}
+    rpc GetNextBatch(IteratorSpec) returns (Dataset) {}
+}
+
+
+message DatSetSpec {
+    int32 Id = 1;
+}
+
+message IteratorSpec {
+    int32 Id = 1;
+}
+
+message DataSetIteratorConfig {
+    int32 batchSize = 1;
+    bool shuffle = 2;
+    int32 shuffleSeed = 3;
+}
+
+message Dataset {
+    string data = 1;
+    string schema = 2;
+}
