@@ -1,0 +1,9 @@
+version: "3.6"
+
+services:
+  server:
+    image: ds_server:latest
+    ports:
+      - "50051:50051"
+  memcached:
+    image: memcached    
