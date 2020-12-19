@@ -14,28 +14,50 @@ class DataSetServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.CreateIterator = channel.unary_unary(
-                '/DataSetService/CreateIterator',
+        self.createIterator = channel.unary_unary(
+                '/DataSetService/createIterator',
                 request_serializer=dataset__store__pb2.DatSetSpec.SerializeToString,
                 response_deserializer=dataset__store__pb2.IteratorSpec.FromString,
                 )
-        self.GetNextBatch = channel.unary_unary(
-                '/DataSetService/GetNextBatch',
+        self.getNextBatch = channel.unary_unary(
+                '/DataSetService/getNextBatch',
                 request_serializer=dataset__store__pb2.IteratorSpec.SerializeToString,
                 response_deserializer=dataset__store__pb2.Dataset.FromString,
+                )
+        self.putDatapoint = channel.unary_unary(
+                '/DataSetService/putDatapoint',
+                request_serializer=dataset__store__pb2.KVPair.SerializeToString,
+                response_deserializer=dataset__store__pb2.KVPair.FromString,
+                )
+        self.getDatapoint = channel.unary_unary(
+                '/DataSetService/getDatapoint',
+                request_serializer=dataset__store__pb2.Key.SerializeToString,
+                response_deserializer=dataset__store__pb2.Value.FromString,
                 )
 
 
 class DataSetServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def CreateIterator(self, request, context):
+    def createIterator(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetNextBatch(self, request, context):
+    def getNextBatch(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def putDatapoint(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getDatapoint(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -44,15 +66,25 @@ class DataSetServiceServicer(object):
 
 def add_DataSetServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'CreateIterator': grpc.unary_unary_rpc_method_handler(
-                    servicer.CreateIterator,
+            'createIterator': grpc.unary_unary_rpc_method_handler(
+                    servicer.createIterator,
                     request_deserializer=dataset__store__pb2.DatSetSpec.FromString,
                     response_serializer=dataset__store__pb2.IteratorSpec.SerializeToString,
             ),
-            'GetNextBatch': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetNextBatch,
+            'getNextBatch': grpc.unary_unary_rpc_method_handler(
+                    servicer.getNextBatch,
                     request_deserializer=dataset__store__pb2.IteratorSpec.FromString,
                     response_serializer=dataset__store__pb2.Dataset.SerializeToString,
+            ),
+            'putDatapoint': grpc.unary_unary_rpc_method_handler(
+                    servicer.putDatapoint,
+                    request_deserializer=dataset__store__pb2.KVPair.FromString,
+                    response_serializer=dataset__store__pb2.KVPair.SerializeToString,
+            ),
+            'getDatapoint': grpc.unary_unary_rpc_method_handler(
+                    servicer.getDatapoint,
+                    request_deserializer=dataset__store__pb2.Key.FromString,
+                    response_serializer=dataset__store__pb2.Value.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -65,7 +97,7 @@ class DataSetService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def CreateIterator(request,
+    def createIterator(request,
             target,
             options=(),
             channel_credentials=None,
@@ -75,14 +107,14 @@ class DataSetService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/DataSetService/CreateIterator',
+        return grpc.experimental.unary_unary(request, target, '/DataSetService/createIterator',
             dataset__store__pb2.DatSetSpec.SerializeToString,
             dataset__store__pb2.IteratorSpec.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetNextBatch(request,
+    def getNextBatch(request,
             target,
             options=(),
             channel_credentials=None,
@@ -92,8 +124,42 @@ class DataSetService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/DataSetService/GetNextBatch',
+        return grpc.experimental.unary_unary(request, target, '/DataSetService/getNextBatch',
             dataset__store__pb2.IteratorSpec.SerializeToString,
             dataset__store__pb2.Dataset.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def putDatapoint(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/DataSetService/putDatapoint',
+            dataset__store__pb2.KVPair.SerializeToString,
+            dataset__store__pb2.KVPair.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def getDatapoint(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/DataSetService/getDatapoint',
+            dataset__store__pb2.Key.SerializeToString,
+            dataset__store__pb2.Value.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
