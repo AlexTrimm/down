@@ -4,4 +4,4 @@ proto:
 
 .PHONY: server
 server:
-	docker build -t ds_server
+	docker build -t ds_server .
